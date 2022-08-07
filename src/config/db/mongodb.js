@@ -1,9 +1,9 @@
-const mongoose = require('mongoose')
+const {connect: connect1} = require('mongoose')
 async function connect() {
 
     try {
-        await mongoose.connect(
-            'mongodb+srv://benf_le:benfle@cluster0.8pxnkzu.mongodb.net/?retryWrites=true&w=majority'
+        await connect1(
+            'mongodb+srv://kriptoexchange:gfL5Hc4tbPtNJ3jz@cluster0.8pxnkzu.mongodb.net/?retryWrites=true&w=majority'
             // 'mongodb://localhost:27017'
        );
 

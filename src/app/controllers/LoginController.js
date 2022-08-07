@@ -1,8 +1,48 @@
 const path = require('path')
 const {authenticator} = require("otplib");
 const jwt = require("jsonwebtoken");
+const express = require('express')
+
+const app = express()
+
+const session = require('express-session')
+const sqlite3 = require("sqlite3");
+
+app.use(session({
+    secret: 'supersecret',
+}))
+
+const jwtMiddleware = require('../../midlewave/mdw')
 
 
+function verifyLogin(email, code, req, res, failUrl) {
+    //load user by email
+    const db = new sqlite3.Database('db.sqlite')
+    db.serialize(() => {
+        db.get('SELECT secret FROM users WHERE email = ?', [email], (err, row) => {
+            if (err) {
+                throw err
+            }
+
+            if (!row) {
+                return res.redirect('/')
+            }
+
+            if (!authenticator.check(code, row.secret)) {
+                //redirect back
+                return res.redirect(failUrl)
+            }
+
+            //correct, add jwt to session
+            req.session.qr = null
+            req.session.email = null
+            req.session.token = jwt.sign(email, 'supersecret')
+
+            //redirect to "private" page
+            return res.redirect('/private')
+        })
+    })
+}
 
 /** controller get home page */
 class LoginPage {
@@ -14,9 +54,10 @@ class LoginPage {
 
         const email = req.body.email;
         const password = req.body.password;
-        const re_password = req.body.re_password;
 
-        return verifyLogin(email, code, req, res, '/login')
+        const code = req.body.code
+
+        return verifyLogin(email, code, password, req, res, '/login')
 
 
 

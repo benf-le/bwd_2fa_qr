@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 8580;
-// const morgan = require('morgan');
+const morgan = require('morgan');
 // const handlebars = require('express-handlebars');
 const path = require('path');
 const route = require('./src/routes');
@@ -13,12 +13,23 @@ const bodyParser = require('body-parser');
 
 //
 // app.use(cookieParser())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: true }))
 // app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, '/')));
 //
 // app.set('views', path.join(__dirname, 'views'));
 // // console.log(path.join(__dirname, 'src\\views'))
+
+const { engine } = require('express-handlebars');
+
+
+
+// HTTP logger
+app.use(morgan('combined'));
+
+// Template Engine
+app.engine('hbs', engine({ extname: '.hbs' }));
+app.set('view engine', 'hbs');
 
 
 

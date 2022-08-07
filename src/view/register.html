@@ -107,23 +107,24 @@
                     </div>
                 </th>
             </tr>
-            <form action="/register" method="post">
+            <div>
             <tr>
                 <td>
-                    <input type="text" id="email" placeholder="Email / phone" >
+                    <input type="text"  id="email" placeholder="Email / phone" >
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="password" id="password" placeholder="Password" >
+                    <input type="password"  id="password" placeholder="Password" >
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input type="password" id="re_password" placeholder="Confirm Password" >
+
+                    <input type="password" id="re-password" placeholder="Confirm Password" >
                 </td>
             </tr>
-            </form>
+            </div>
             <tr>
                 <td>
                     <button id="sign-up" class="button-purple">Sign up</button>
@@ -147,6 +148,7 @@
 <script src="/bootstrap/js/bootstrap.bundle.js"></script>
 <script src="/bootstrap/js/bootstrap.js"></script>
 <script src="/src/public/js/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
 <script async defer crossorigin="anonymous"
         src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v14.0&appId=966413697364774&autoLogAppEvents=1"
@@ -165,20 +167,19 @@
             data: {
                 email: $('#email').val(),
                 password: $('#password').val(),
-                re_password: $('#re_password').val(),
             }
         })
             .then(data => {
-                if (data == 'user got duplicated') {
-                    $('.alert').css('display', 'block').text('Tài khoản đã có người sử dụng');
-                } else if (data != 'that bai') {
-                    $('.alert').css({
-                        display: 'block',
-                        color: '#01fb01',
-                    }).text('Đăng kí thành công');
-                } else {
-                    $('.alert').css('display', 'block');
-                }
+                // if (data == 'user got duplicated') {
+                //     $('.alert').css('display', 'block').text('Tài khoản đã có người sử dụng');
+                // } else if (data != 'that bai') {
+                //     $('.alert').css({
+                //         display: 'block',
+                //         color: '#01fb01',
+                //     }).text('Đăng kí thành công');
+                // } else {
+                //     $('.alert').css('display', 'block');
+                // }
             })
             .catch(err => {
                 console.log(err);
@@ -186,7 +187,7 @@
     }
 
     $('#sign-up').on('click', () => {
-        if ($('input#password').val() === $('input#re_password').val()) {
+        if ($('#password').val() === $('#re-password').val()) {
             Register();
         } else {
             $('.alert').text('Nhập lại mật khẩu không đúng. Vui lòng thử lại');
