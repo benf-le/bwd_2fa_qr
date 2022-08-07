@@ -4,18 +4,20 @@ const AccPage = require('../app/controllers/AccountController')
 const LoginPage = require('../app/controllers/LoginController')
 const RegisterPage = require('../app/controllers/RegisterController')
 const RePassPage = require('../app/controllers/RePass_Controller')
+const registerRouter = require('./registerRouter')
 
 const { urlencoded } = require('body-parser');
 
 
 function route(app) {
 
-    app.use('/index',HomePage.show)
     app.use('/news', newsPage.show)
     app.use('/account', AccPage.show)
     app.use('/login', LoginPage.show)
-    app.use('/register', RegisterPage.show)
+    app.use('/register', registerRouter)
     app.use('/recover-password', RePassPage.show)
+    app.use('/',HomePage.show)
+
 
     //
     // app.use('/login', loginRouter);

@@ -4,7 +4,8 @@ async function connect() {
     try {
         await mongoose.connect(
             'mongodb+srv://benf_le:benfle@cluster0.8pxnkzu.mongodb.net/?retryWrites=true&w=majority'
-        );
+            // 'mongodb://localhost:27017'
+       );
 
         console.log('\nConnected to DataBase');
     } catch (err) {
