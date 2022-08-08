@@ -36,7 +36,7 @@ app.post('/sign-up', (req, res) => {
         }
 
         //generate qr and put it in session
-        QRCode.toDataURL(authenticator.keyuri(email, '2FA Node App', secret), (err, url) => {
+        QRCode.toDataURL(authenticator.keyuri(email, 'KriptoExchange', secret), (err, url) => {
           if (err) {
             throw err
           }
