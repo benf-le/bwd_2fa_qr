@@ -7,7 +7,7 @@ const QRCode = require("qrcode");
 
 
 /** controller get home page */
-class RegisterPage {
+class RegisterController {
     // GET
     show(req, res) {
         return res.sendFile(path.join(__dirname, '../../view/register.html'))
@@ -34,5 +34,5 @@ class RegisterPage {
 
 }
 
-module.exports = new RegisterPage()
+module.exports = new RegisterController()
 

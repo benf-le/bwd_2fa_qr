@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 8580;
 const morgan = require('morgan');
-// const handlebars = require('express-handlebars');
 const path = require('path');
 const route = require('./src/routes');
 // const mongoose = require('mongoose');
@@ -27,11 +26,12 @@ const { engine } = require('express-handlebars');
 // HTTP logger
 app.use(morgan('combined'));
 
+
 // Template Engine
 app.engine('hbs', engine({ extname: '.hbs' }));
 app.set('view engine', 'hbs');
 
-
+app.set('views', path.join(__dirname, 'src/view'));
 
 // connect DB
 const db = require('./src/config/db/mongodb');
@@ -42,6 +42,10 @@ app.use(
         extended: true,
     }),
 );
+
+// app.get('/hi', (req, res) => {
+//     res.render('signup-2fa');
+// });
 //Route init
 route(app);
 

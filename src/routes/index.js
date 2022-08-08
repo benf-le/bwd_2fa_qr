@@ -2,7 +2,7 @@ const HomePage = require('../app/controllers/HomeController')
 const newsPage = require('../app/controllers/NewController')
 const AccPage = require('../app/controllers/AccountController')
 const LoginPage = require('../app/controllers/LoginController')
-const RegisterPage = require('../app/controllers/RegisterController')
+const SignUp2faRouter = require('./SignUp-2fa-Routes')
 const RePassPage = require('../app/controllers/RePass_Controller')
 const registerRouter = require('./registerRouter')
 
@@ -16,6 +16,7 @@ function route(app) {
     app.use('/login', LoginPage.show)
     app.use('/register', registerRouter)
     app.use('/recover-password', RePassPage.show)
+    app.use('/signup-2fa', SignUp2faRouter)
     app.use('/',HomePage.show)
 
 

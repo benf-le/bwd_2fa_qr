@@ -5,13 +5,7 @@ const express = require('express')
 
 const app = express()
 
-const session = require('express-session')
-const sqlite3 = require("sqlite3");
-
-app.use(session({
-    secret: 'supersecret',
-}))
-
+const sessionMiddleware = require('../../midlewave/mdw')
 const jwtMiddleware = require('../../midlewave/mdw')
 const QRCode = require("qrcode");
 
@@ -35,7 +29,7 @@ function verifyLogin(email, code, req, res, failUrl) {
             }
 
             //correct, add jwt to session
-            req.session.qr = null
+            req.sessionMiddleware.session.qr = null
             req.session.email = null
             req.session.token = jwt.sign(email, 'supersecret')
 

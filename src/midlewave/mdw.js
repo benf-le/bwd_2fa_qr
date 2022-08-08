@@ -1,4 +1,10 @@
 const expressJWT = require("express-jwt");
+const session = require("express-session");
+
+const sessionMiddleware = session({
+    secret: 'supersecret',
+})
+
 const jwtMiddleware = expressJWT({
     secret: 'supersecret',
     algorithms: ['HS256'],
@@ -6,4 +12,4 @@ const jwtMiddleware = expressJWT({
         return req.session.token
     }
 })
-module.exports ={jwtMiddleware}
+module.exports ={sessionMiddleware,jwtMiddleware}
