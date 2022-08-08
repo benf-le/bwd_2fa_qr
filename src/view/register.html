@@ -187,7 +187,8 @@
                 if(data =='Successful Registration'){
                     Swal.fire({
                         icon: 'success',
-                        html: 'Successful Registration, will go to the Login page after this message.',
+                        title: 'Successful Registration',
+                        html: 'Will go to the Login page after this message.',
                         footer: 'From KriptoExchange with love ❤️',
                         showConfirmButton: false,
                         timer: 5000,
@@ -205,8 +206,14 @@
         if ($('#password').val() === $('#re-password').val()) {
             Register();
         } else {
-            alert('Mật khẩu không trùng nhau. Xin hãy nhập lại');
-        }
+            Swal.fire({
+                icon: 'error',
+                title: 'Incorrect Password',
+                html: 'Please re-enter password',
+                footer: 'From KriptoExchange with love ❤️',
+                showConfirmButton: false,
+                timer: 7000,
+            })        }
     })
 </script>
 </body>
