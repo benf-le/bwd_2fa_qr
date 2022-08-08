@@ -13,6 +13,7 @@ app.use(session({
 }))
 
 const jwtMiddleware = require('../../midlewave/mdw')
+const QRCode = require("qrcode");
 
 
 function verifyLogin(email, code, req, res, failUrl) {
@@ -57,11 +58,17 @@ class LoginPage {
 
         const code = req.body.code
 
-        return verifyLogin(email, code, password, req, res, '/login')
+        QRCode.toDataURL(authenticator.keyuri(email, 'KriptoExchange', secret), (err, url) => {
+            if (err) {
+                throw err
+            }
+
+            req.session.qr = url
+            req.session.email = email
+            res.redirect('/sign-up-2fa')
 
 
-
-        }
+        })}
 
 
 }

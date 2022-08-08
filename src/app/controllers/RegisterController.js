@@ -4,8 +4,6 @@ const User = require('../models/User')
 const QRCode = require("qrcode");
 
 
-const MongoClient = require('mongodb').MongoClient;
-const url = "mongodb+srv://kriptoexchange:gfL5Hc4tbPtNJ3jz@cluster0.8pxnkzu.mongodb.net/?retryWrites=true&w=majority"
 
 
 /** controller get home page */
@@ -19,10 +17,16 @@ class RegisterPage {
 
     // POST register/regis để lưu dữ liệu vào đây
     register(req, res, next){
-        const user = new User(req.body);
+        const user = new User(
+            {
+                email:req.body.email,
+                password: req.body.password,
+                secret : authenticator.generateSecret()
+
+            });
         user
             .save()
-            .then(() => res.redirect('/login'))
+            .then(() => res.json('Successful Registration'))
             .catch( function () {
                 return res.json('user got duplicated')
             });
