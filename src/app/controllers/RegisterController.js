@@ -61,7 +61,8 @@ class RegisterController {
 
     get2fa(req, res) {
         if (!req.session.qr) {
-            // return res.redirect('/')
+            return res.redirect('/loio')
+
         }
 
         return res.render('signup__2fa.ejs', {qr: req.session.qr})
