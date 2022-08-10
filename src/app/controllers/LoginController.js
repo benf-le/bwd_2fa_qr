@@ -2,25 +2,38 @@ const path = require('path')
 const {authenticator} = require("otplib");
 const jwt = require("jsonwebtoken");
 const express = require('express')
+const User = require('../models/User')
+
 
 const app = express()
 
-const sessionMiddleware = require('../../midlewave/mdw')
-const jwtMiddleware = require('../../midlewave/mdw')
+// const sessionMiddleware = require('../../midlewave/mdw')
+// const jwtMiddleware = require('../../midlewave/mdw')
+// const QRCode = require("qrcode");
+const session = require("express-session");
+const expressJWT = require("express-jwt");
 const QRCode = require("qrcode");
 
 
-function verifyLogin(email, code, req, res, failUrl) {
-    //load user by email
-    const db = new sqlite3.Database('db.sqlite')
-    db.serialize(() => {
-        db.get('SELECT secret FROM users WHERE email = ?', [email], (err, row) => {
-            if (err) {
-                throw err
-            }
 
+const jwtMiddleware = expressJWT({
+    secret: 'supersecret',
+    algorithms: ['HS256'],
+    getToken: (req) => {
+        return req.session.token
+    }
+})
+function verifyLogin(email, code, req, res, failUrl,err) {
+
+    //load user by email
+    User.findOne({
+        email: email,
+        password: this.password,
+
+    })
+        .then (row => {
             if (!row) {
-                return res.redirect('/')
+                return res.redirect('/loi')
             }
 
             if (!authenticator.check(code, row.secret)) {
@@ -29,14 +42,18 @@ function verifyLogin(email, code, req, res, failUrl) {
             }
 
             //correct, add jwt to session
-            req.sessionMiddleware.session.qr = null
+            req.session.qr = null
             req.session.email = null
             req.session.token = jwt.sign(email, 'supersecret')
 
             //redirect to "private" page
             return res.redirect('/private')
         })
-    })
+        .catch(err)
+    {
+        res.status(500).json({ err: 'loi server'})
+    }
+
 }
 
 /** controller get home page */
@@ -49,23 +66,22 @@ class LoginPage {
 
         const email = req.body.email;
         const password = req.body.password;
+        const  code = req.body.code
 
-        const code = req.body.code
-
-        QRCode.toDataURL(authenticator.keyuri(email, 'KriptoExchange', secret), (err, url) => {
+        QRCode.toDataURL(authenticator.keyuri(this.email, 'KriptoExchange', this.secret), (err, url) => {
             if (err) {
                 throw err
             }
 
             req.session.qr = url
-            req.session.email = email
-            res.redirect('/sign-up-2fa')
+            req.session.email = this.email
+            res.redirect('/signup-2fa')
+
+        })
 
 
-        })}
 
-
-}
+}}
 module.exports = new LoginPage()
 
 

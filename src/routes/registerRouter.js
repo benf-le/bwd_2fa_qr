@@ -3,8 +3,10 @@ const router = express.Router();
 
 const RegisterController = require('../app/controllers/RegisterController');
 
-router.get('/', RegisterController.show);
-router.post('/', RegisterController.register);
+router.get('/', RegisterController.showRe);
+// router.post('/', RegisterController.postRe);
+// router.post('/', RegisterController.postRe);
+//
 
 
 module.exports = router;

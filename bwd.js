@@ -4,10 +4,9 @@ const port = process.env.PORT || 8580;
 const morgan = require('morgan');
 const path = require('path');
 const route = require('./src/routes');
-// const mongoose = require('mongoose');
-// const db = require ('./config/db/mongodb')
-// const methodOverride = require('method-override')
 const bodyParser = require('body-parser');
+const session = require('express-session')
+
 // const cookieParser = require('cookie-parser');
 
 //
@@ -23,13 +22,22 @@ const { engine } = require('express-handlebars');
 
 
 
+app.use(session({
+    secret: 'supersecret',
+    resave: true,
+    saveUninitialized: true
+}))
+
+
+
 // HTTP logger
 app.use(morgan('combined'));
 
 
 // Template Engine
-app.engine('hbs', engine({ extname: '.hbs' }));
-app.set('view engine', 'hbs');
+
+app.set('view engine', 'ejs')
+
 
 app.set('views', path.join(__dirname, 'src/view'));
 
@@ -39,7 +47,7 @@ db.connect().then();
 
 app.use(
     express.urlencoded({
-        extended: true,
+        extended: false,
     }),
 );
 

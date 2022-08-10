@@ -2,16 +2,17 @@
   "name": "2fa-tutorial",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "bwd.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon bwd.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.1",
-    "ejs": "^3.1.6",
+    "connect-mongo": "^4.6.0",
+    "ejs": "^3.1.8",
     "express": "^4.17.2",
     "express-handlebars": "^6.0.6",
     "express-jwt": "^6.1.0",

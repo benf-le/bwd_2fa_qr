@@ -7,7 +7,7 @@ const router = express.Router();
 // router.post('/', RegisterController.register);
 const RegisterController = require('../app/controllers/RegisterController');
 
-router.get('/', RegisterController.get2fa);
+router.post('/', RegisterController.postRe);
 
 
 module.exports = router;

@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken')
 const expressJWT = require('express-jwt')
 const bodyParser = require('body-parser')
 const app = express()
-const port = 3300
+const port = 3000
 
 app.set('view engine', 'ejs')
 
@@ -36,7 +36,7 @@ app.post('/sign-up', (req, res) => {
         }
 
         //generate qr and put it in session
-        QRCode.toDataURL(authenticator.keyuri(email, 'KriptoExchange', secret), (err, url) => {
+        QRCode.toDataURL(authenticator.keyuri(email, '2FA Node App', secret), (err, url) => {
           if (err) {
             throw err
           }
