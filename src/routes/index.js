@@ -6,37 +6,30 @@ const SignUp2faRouter = require('./SignUp-2fa-Routes')
 const SignUp = require('./signup')
 const RePassPage = require('../app/controllers/RePass_Controller')
 const registerRouter = require('./registerRouter')
+const RegisterController = require('../app/controllers/RegisterController')
 
 const { urlencoded } = require('body-parser');
+const express = require("express");
 
+const router = express.Router()
 
 function route(app) {
 
-    app.use('/news', newsPage.show)
-    app.use('/account', AccPage.show)
-    app.use('/login', LoginPage.show)
-    app.use('/register', registerRouter)
-    app.use('/recover-password', RePassPage.show)
-    app.use('/signup-2fa', SignUp2faRouter)
-    app.use('/signup', SignUp)
-    app.use('/',HomePage.show)
+    router.get('/news', newsPage.show)
+    router.get('/account', AccPage.show)
+    router.get('/login', LoginPage.show)
+    // app.use('/register', registerRouter)
+    router.get('/register', RegisterController.showRe)
+    router.post('/sign--up', RegisterController.postRe)
+    router.get('/signup-2fa', RegisterController.get2fa)
 
+    router.get('/recover-password', RePassPage.show)
+    // router.get('/signup-2fa', SignUp2faRouter)
+    // router.get('/signup', SignUp)
+    router.get('/',HomePage.show)
 
-    //
-    // app.use('/login', loginRouter);
-    // app.use('/register', registerRouter);
-    // app.use('/', LoginController.checkAuth, siteRouter);
-    // app.use('/me', LoginController.checkAuth, meRouter);
-    //
-    // app.use('/vietnam_books',siteController.showVietNamBooks);
-    // app.use('/english_books',siteController.showEnglishBooks);
-    // app.use('/abilities_books',siteController.showAbilitiesBooks)
-    // app.use('/detective_books',siteController.showDetectiveBooks);
-    // app.use('/comic_books',siteController.showComicBooks);
-
-    // app.get('*', function(req, res){
-    //     res.status(404).render('404');
-    //   });
+    return app.use('/', router)
+    
 }
 
 module.exports = route;
