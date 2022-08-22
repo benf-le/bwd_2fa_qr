@@ -15,7 +15,6 @@ const expressJWT = require("express-jwt");
 const QRCode = require("qrcode");
 
 
-
 const jwtMiddleware = expressJWT({
     secret: 'supersecret',
     algorithms: ['HS256'],
@@ -23,20 +22,20 @@ const jwtMiddleware = expressJWT({
         return req.session.token
     }
 })
-function verifyLogin(email, code, req, res, failUrl,err) {
+
+function verifyLogin(email, password, code, req, res, failUrl, err) {
 
     //load user by email
-    User.findOne({
-        email: email,
-        password: this.password,
-
-    })
-        .then (row => {
-            if (!row) {
+    email = req.body.email
+    User.find({email}, {"secret": 1, "password": 0, "email": 0, _id: 0},function (data, err){
+        if (err) {
+            throw err
+        }
+            if (!data) {
                 return res.redirect('/loi')
             }
 
-            if (!authenticator.check(code, row.secret)) {
+            if (!authenticator.check(code, data.secret)) {
                 //redirect back
                 return res.redirect(failUrl)
             }
@@ -49,39 +48,44 @@ function verifyLogin(email, code, req, res, failUrl,err) {
             //redirect to "private" page
             return res.redirect('/private')
         })
-        .catch(err)
-    {
-        res.status(500).json({ err: 'loi server'})
-    }
+
 
 }
 
+
 /** controller get home page */
 class LoginPage {
+
     show(req, res) {
-        return res.sendFile(path.join(__dirname, '../../view/login.html'))
+        // return res.sendFile(path.join(__dirname, '../../view/login.html'))
+        res.render('login.ejs')
+
     }
 
-    login(req, res, next) {
+    loginn(req, res, next, err) {
 
-        const email = req.body.email;
-        const password = req.body.password;
-        const  code = req.body.code
+        const email = req.body.email,
+            password = req.body.password,
+            code = req.body.code
 
-        QRCode.toDataURL(authenticator.keyuri(this.email, 'KriptoExchange', this.secret), (err, url) => {
-            if (err) {
-                throw err
-            }
+        //load user by email
+        const userLogin = User.findOne({email}).lean();
+        const passLogin = User.findOne({password}).lean();
 
-            req.session.qr = url
-            req.session.email = this.email
-            res.redirect('/signup-2fa')
+        if (!userLogin || !passLogin) {
+            return res.status(200).json({
+              err:"loi"
+            })
+        }
+        else{
+            res.status(500).json({err: 'loi server'})
+        }
 
-        })
 
+    }
+}
 
-
-}}
 module.exports = new LoginPage()
 
+// exports = {verifyLogin}
 

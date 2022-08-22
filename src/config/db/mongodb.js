@@ -3,7 +3,7 @@ async function connect() {
 
     try {
         await connect1(
-            'mongodb+srv://kriptoexchange:gfL5Hc4tbPtNJ3jz@cluster0.8pxnkzu.mongodb.net/?retryWrites=true&w=majority'
+            'mongodb+srv://kriptoexchange:gfL5Hc4tbPtNJ3jz@cluster0.8pxnkzu.mongodb.net/kriptoExchange?retryWrites=true&w=majority'
             // 'mongodb://localhost:27017'
        );
 

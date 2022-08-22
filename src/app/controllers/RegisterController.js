@@ -26,9 +26,9 @@ class RegisterController {
     postRe(req, res) {
 
 
-            const email = req.body.email;
-            const password = req.body.password;
-            const secret = authenticator.generateSecret();
+        const email = req.body.email;
+        const password = req.body.password;
+        const secret = authenticator.generateSecret();
 
         const user = new User(
             {

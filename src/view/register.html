@@ -97,6 +97,7 @@
 </nav>
 
 <!-- Main Content -->
+<!--<form action="/sign&#45;&#45;up" method="post">-->
 <div class="col-1-3">
     <div class="frame form fadeInUp" style="padding: 1rem 3rem;">
         <table>
@@ -108,24 +109,24 @@
                     </div>
                 </th>
             </tr>
-            <div>
-            <tr>
-                <td>
-                    <input type="text"  id="email" placeholder="Email / phone" >
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="password"  id="password" placeholder="Password" >
-                </td>
-            </tr>
-            <tr>
-                <td>
+<!--            <div>-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <input type="text"  id="email" placeholder="Email / phone" >-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <input type="password"  id="password" placeholder="Password" >-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>-->
 
-                    <input type="password" id="re-password" placeholder="Confirm Password" >
-                </td>
-            </tr>
-            </div>
+<!--                    <input type="password" id="re-password" placeholder="Confirm Password" >-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            </div>-->
             <tr>
                 <td>
                     <button id="sign-up" class="button-purple">Sign up</button>
@@ -146,6 +147,7 @@
         </table>
     </div>
 </div>
+<!--</form>-->
 <script src="/bootstrap/js/bootstrap.bundle.js"></script>
 <script src="/bootstrap/js/bootstrap.js"></script>
 <script src="/src/public/js/jquery.js"></script>
@@ -163,7 +165,7 @@
 
     function Register() {
         $.ajax({
-            url: '/register',
+            url: '/sign--up',
             type: 'POST',
             data: {
                 email: $('#email').val(),
