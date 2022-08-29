@@ -3,11 +3,13 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const User = new Schema({
-    email: {type: String, maxlength: 255,  },
-    password: {type: String, maxlength: 255},
+    email: {type: String,  required: true, maxlength: 255, unique:true  },
+    password: {type: String,  required: true, maxlength: 255},
     secret: {type: String,  required: true},
-
-}, {
+    // phan quyen admin
+    admin:{type: Boolean, default:false},
+},
+    {
     timestamps: true,
     // collection: 'users',
 })
