@@ -73,7 +73,10 @@ const LoginPage = {
 
             //load user by email
             const emailLogin = await User.findOne({email}).lean();
-            if(emailLogin !== email){
+
+            //Nhập sai pass
+
+            if(!emailLogin){
                 // res.render('404_wrong_email.ejs')
                 res.send("Wrong Email. Please try again!")
             }
@@ -83,12 +86,14 @@ const LoginPage = {
             // lấy data từ database của câu lệnh emailLogin check xem có đúng pass ko
             const validPassword = await bcrypt.compare(req.body.password, emailLogin.password)
 
+            //Nhập sai pass
              if(!validPassword){
                 res.render('404_wrong_pass.ejs')
             }
 
+             //nếu nhập đúng email và pass thì chuyển qua trang account
             if(emailLogin && validPassword){
-                res.status(200).json("ok")
+                res.redirect('/account')
 
             }
 
